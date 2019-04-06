@@ -1,0 +1,22 @@
+{
+  "name": "qk6080-vue",
+  "version": "0.0.1",
+  "description": "qk6080电影vue版本",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liupishui/qk6080-vue.git"
+  },
+  "keywords": [
+    "qk"
+  ],
+  "author": "刘丕水",
+  "license": "MIT License",
+  "bugs": {
+    "url": "https://github.com/liupishui/qk6080-vue/issues"
+  },
+  "homepage": "https://github.com/liupishui/qk6080-vue#readme"
+}
