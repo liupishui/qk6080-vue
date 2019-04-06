@@ -1,6 +1,6 @@
 {
   "name": "qk6080-vue",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "qk6080电影vue版本",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
