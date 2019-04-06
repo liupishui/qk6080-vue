@@ -77,15 +77,15 @@ async function axiosPost () {
     }
   }
   if (arguments.length === 1) {
-    return await $axios.post(arguments[0], {}, baseConfig)
+    return $axios.post(arguments[0], {}, baseConfig)
   }
 
   if (arguments.length === 2) {
-    return await $axios.post(arguments[0], arguments[1], baseConfig)
+    return $axios.post(arguments[0], arguments[1], baseConfig)
   }
 
   if (arguments.length === 3) {
-    return await $axios.post(arguments[0], arguments[1], deepObjectMerge(baseConfig, arguments[2]))
+    return $axios.post(arguments[0], arguments[1], deepObjectMerge(baseConfig, arguments[2]))
   }
 }
 
@@ -93,7 +93,7 @@ async function axiosGet () {
   let baseConfig = {
   }
   if (arguments.length === 1) {
-    return await $axios.get(arguments[0], {}, baseConfig)
+    return $axios.get(arguments[0], {}, baseConfig)
   }
 
   if (arguments.length === 2) {
@@ -101,11 +101,11 @@ async function axiosGet () {
     $axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
     $axios.get(arguments[0], arguments[1]).then(rst => {
     })
-    return await $axios.get(arguments[0], arguments[1], baseConfig)
+    return $axios.get(arguments[0], arguments[1], baseConfig)
   }
 
   if (arguments.length === 3) {
-    return await $axios.get(arguments[0], arguments[1], deepObjectMerge(baseConfig, arguments[2]))
+    return $axios.get(arguments[0], arguments[1], deepObjectMerge(baseConfig, arguments[2]))
   }
 }
 
