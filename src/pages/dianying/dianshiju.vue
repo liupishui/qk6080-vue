@@ -78,12 +78,12 @@
             showplayLayer:function(event){
             },
             loadList() {
-                this.$axios.get('/list.php',{
-                    params:{
-                        "page":this.page,
-                        'id'  :this.typeid
-                    }
-                }).then((res)=>{
+                this.$api['list.php']({
+                        params:{
+                            "page":this.page,
+                            'id'  :this.typeid
+                        }
+                    }).then((res)=>{
                     const _list = res.data;
                     let _listCurr = [];
                     _list.forEach((ele,key)=>{

@@ -9,10 +9,12 @@ import 'vue-ydui/dist/ydui.base.css'
 import 'vue-ydui/dist/ydui.rem.css'
 import 'vue-ydui/dist/ydui.flexible.js'
 import store from './store/index'
+import Api from '@/common/api'
 import axios from 'axios'
 import VueI18n from 'vue-i18n'
 import VeeValidate from 'vee-validate'
 Vue.prototype.rootPath = '/vue'
+let $api = new Api('https://www.qk6080.com')
 Vue.use(VueI18n)
 // http://kazupon.github.io/vue-i18n/started.html#javascript
 const messages = {
@@ -39,6 +41,8 @@ Vue.use(VeeValidate, {
     'ZH_CN': require('vee-validate/dist/locale/zh_CN')
   }
 })
+
+Vue.prototype.$api = $api
 Vue.use(Vuex)
 Vue.use(YDUI)
 Vue.config.productionTip = true
