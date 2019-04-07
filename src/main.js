@@ -45,7 +45,7 @@ Vue.use(VeeValidate, {
 Vue.prototype.$api = $api
 Vue.use(Vuex)
 Vue.use(YDUI)
-Vue.config.productionTip = true
+// Vue.config.productionTip = true
 
 // https://github.com/axios/axios#creating-an-instance //建立一个实例
 let $axios = axios.create({
