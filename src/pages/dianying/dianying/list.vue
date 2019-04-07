@@ -80,17 +80,14 @@
                 console.log('----',event)
             },
             loadList() {
-                this.$axios.get('/list.php',{
-                    params:{
-                        "page":this.page,
-                        'id'  :this.typeid
-                    }
-                }).then((res)=>{
+                let _self = this
+                this.$api.get('/list.php',{"page":this.page,'id'  :this.typeid})
+                .then((res)=>{
                     const _list = res.data;
                     let _listCurr = [];
                     _list.forEach((ele,key)=>{
                         let imgsrc = ele.poster;
-                        ele.poster = "https://www.qk6080.com/images/public/"+ele.poster.substr(ele.poster.lastIndexOf('/'));
+                        ele.poster = _self.$api.config.img_url + ele.poster.substr(ele.poster.lastIndexOf('/'));
                         ele.posters = imgsrc;
                     })
                     this.list = [...this.list, ..._list];

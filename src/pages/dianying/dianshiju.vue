@@ -78,35 +78,33 @@
             showplayLayer:function(event){
             },
             loadList() {
-                this.$api['list.php']({
-                        params:{
-                            "page":this.page,
-                            'id'  :this.typeid
-                        }
-                    }).then((res)=>{
-                    const _list = res.data;
-                    let _listCurr = [];
-                    _list.forEach((ele,key)=>{
-                        let imgsrc = ele.poster;
-                        ele.poster = "https://www.qk6080.com/images/public/"+ele.poster.substr(ele.poster.lastIndexOf('/'));
-                        ele.posters = imgsrc;
-                    })
-                    this.list = [...this.list, ..._list];
+                let _self = this
+                console.log()
+                this.$api.get('/list.php',{"page":this.page,'id'  :this.typeid})
+                        .then((res)=>{
+                            const _list = res.data;
+                            let _listCurr = [];
+                            _list.forEach((ele,key)=>{
+                                let imgsrc = ele.poster;
+                                ele.poster = _self.$api.config.img_url+ele.poster.substr(ele.poster.lastIndexOf('/'));
+                                ele.posters = imgsrc;
+                            })
+                            this.list = [...this.list, ..._list];
 
-                    //if (_list.length < this.pageSize || this.page == 3) {
-                    if (_list.length < this.pageSize) {
-                        /* 所有数据加载完毕 */
-                        this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.loadedDone');
-                        return;
-                    }
+                            //if (_list.length < this.pageSize || this.page == 3) {
+                            if (_list.length < this.pageSize) {
+                                /* 所有数据加载完毕 */
+                                this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.loadedDone');
+                                return;
+                            }
 
-                    /* 单次请求数据完毕 */
-                    this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.finishLoad');
+                            /* 单次请求数据完毕 */
+                            this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.finishLoad');
 
-                    this.page++;
-                },(err)=>{
-                    console.log(err)
-                })
+                            this.page++;
+                        },(err)=>{
+                            console.log(err)
+                        })
             }
         },
         watch:{

@@ -14,7 +14,7 @@ import axios from 'axios'
 import VueI18n from 'vue-i18n'
 import VeeValidate from 'vee-validate'
 Vue.prototype.rootPath = '/vue'
-let $api = new Api('https://www.qk6080.com')
+let $api = new Api()
 Vue.use(VueI18n)
 // http://kazupon.github.io/vue-i18n/started.html#javascript
 const messages = {
