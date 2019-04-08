@@ -28,6 +28,7 @@
                             query:{typeid:11}
                         }
                     ]
+    需要在this.$store.state.Childpageslider内添加对应的groupname值
     本组件最好只用作列表展示用，内部不可以出现水平滚动条和
     组件最多嵌套两层,第一层nested的值为false，第二层nested的值为true。
     组件基于swiper 如果第一层被在另一个swiper内，则不存在第二层，且第一层nested为true。如果第一层外不存在swiper则第一层内可以放swiper，且nested的值为true，相当于第二层；第二层内不可以存在swiper和水平滑动的组件和浏览器默认水平滚动条。
@@ -81,7 +82,7 @@
             // console.log('============',this.dataSlider[0].path)
             // console.log(findRouterViewName(this.$router.options.routes,this.dataSlider[0].path))
             this.dataSlider.forEach(element => {//初始化数组
-                this.list.push({
+                this.$data.list.push({
                     name : this.findRouterViewNameByPath(this.$router.options.routes,element.path),
                     path : element.path,
                     query : element.query,
@@ -128,8 +129,8 @@
             }
             if(!findPage){
                 findPage = true
-               this.list[0].show = true
-               this.list[0].active = true
+               this.$data.list[0].show = true
+               this.$data.list[0].active = true
             }
             var that = this;
             that.swiperCurr = new Swiper('#'+this.swiperId,{
@@ -155,11 +156,11 @@
                                     that.$data.list[i].show=true
                                 }
                                 that.$store.state.Childpageslider.sliders[that.groupname].info[i].active=true
-                                that.list.active=true
+                                that.$data.list.active=true
                                 //更新路由
-                                let query = that.list[i].query
+                                let query = that.$data.list[i].query
                                 query.swipter=1
-                                let path = that.list[i].path
+                                let path = that.$data.list[i].path
                                 that.isSliderUpdateRouter = true
                                 if(that.nested){
                                     that.$data.routerUpdateCount = 2
