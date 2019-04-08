@@ -1,6 +1,10 @@
 export default {
   state: {
     sliders: {
+      manage: {
+        groupname: 'manage',
+        info: []
+      },
       dianying: {
         groupname: 'dianying',
         info: []

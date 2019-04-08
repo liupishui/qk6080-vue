@@ -18,13 +18,13 @@ export default {
                 dataSlider:[
                     {
                         pageName:'ManageIndex',
-                        param:'5'
+                        query:'5'
                     },{
                         pageName:'ManageIndex',
-                        param:"4"
+                        query:"4"
                     },{
                         pageName:'ManageIcon',
-                        param:"3"
+                        query:"3"
                     }
                 ]
             }

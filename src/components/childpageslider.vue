@@ -28,6 +28,7 @@
                             query:{typeid:11}
                         }
                     ]
+    需要在this.$store.state.Childpageslider内添加对应的groupname值
     本组件最好只用作列表展示用，内部不可以出现水平滚动条和
     组件最多嵌套两层,第一层nested的值为false，第二层nested的值为true。
     组件基于swiper 如果第一层被在另一个swiper内，则不存在第二层，且第一层nested为true。如果第一层外不存在swiper则第一层内可以放swiper，且nested的值为true，相当于第二层；第二层内不可以存在swiper和水平滑动的组件和浏览器默认水平滚动条。
