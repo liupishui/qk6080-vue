@@ -7,6 +7,17 @@ import {
     PRO_CONF,
     APILIST
 } from './config'
+let interceptors = {
+    interceptorsReq: function(request) { // 请求拦截
+        return request
+    },
+    interceptorsRes: function(response) { // 响应拦截
+        return response
+    },
+    errHandler: function(errMsg) { // 错误处理
+
+    }
+}
 let vue = new Vue()
 let $axios = axios.create({
     baseURL: '',
@@ -14,22 +25,23 @@ let $axios = axios.create({
 })
 
 // 添加ajax拦截
-$axios.interceptors.request.use(config => {
+$axios.interceptors.request.use(request => {
     // 请求前做一些事情
-    return config
+    return interceptors.interceptorsReq(request)
 }, error => {
     // 处理请求错误
     vue.$dialog.toast({
         mes: errorCode['600'],
         timeout: 1000
     })
+    interceptors.errHandler({ location: 'ajaxStart', ERR: errorCode, code: '600', MSG: error })
     return Promise.reject(error)
 })
 
 // 添加一个响应拦截
 $axios.interceptors.response.use(response => {
     // 处理response数据
-    return response
+    return interceptors.interceptorsRes(response)
 }, error => {
     // 处理响应错误
     for (let code in errorCode) {
@@ -38,17 +50,18 @@ $axios.interceptors.response.use(response => {
                 mes: errorCode[code],
                 timeout: 1000
             })
+            interceptors.errHandler({ location: 'ajaxEnd', ERR: errorCode, code: code, MSG: error })
         }
     }
     if (error.message === 'Network Error') { // 域名解析不到会报次错误
         vue.$dialog.toast({
-            mes: '连接不到服务器',
+            mes: errorCode['601'],
             timeout: 1000
         })
+        interceptors.errHandler({ location: 'ajaxEnd', ERR: errorCode, code: '601', MSG: error })
     }
     return Promise.reject(error)
 })
-console.log(this)
 async function getToken() {
     //  每次请求前或许token
     //   try {
@@ -94,9 +107,10 @@ async function axiosPost() {
                 baseConfig.headers.Authorization = getToken()
             } else {
                 vue.$dialog.toast({
-                    mes: '获取token失败/没有权限',
+                    mes: errorCode['602'],
                     timeout: 1000
                 })
+                interceptors.errHandler({ location: 'ajaxEnd', ERR: errorCode, code: '602', MSG: '获取token失败/没有权限' })
             }
         }
     }
@@ -147,20 +161,29 @@ function apiMaker(apiKeyArrInput, objInput) {
     return finalApi
 }
 
-let api = function(url) {
+let api = function(url = '', interceptorsDefault = {}) {
     if (process.env.NODE_ENV !== 'production') {
         this.config = DEV_CONF
     } else {
         this.config = PRO_CONF
     }
-    if (url) {
+    // interceptorsDefault={
+    //     interceptorsReq: function(config) { // 请求拦截
+    //         return config
+    //     },
+    //     interceptorsRes: function(response) { // 响应拦截
+    //         return response
+    //     },
+    //     errHandler: function(errMsg) { // 错误处理
+    //     }
+    if (url !== '') {
         $axios.defaults.baseURL = url // 配置axios请求地址
     } else if (this.config.j_url) {
         $axios.defaults.baseURL = this.config.j_url // 配置axios请求地址
     } else {
         throw Error('请求api地址不能为空')
     }
-
+    interceptors = deepObjectMerge(interceptors, interceptorsDefault)
     for (let apiCurr of APILIST) {
         // 挂载APILIST到api
         let apiCurrArr = apiCurr.name.split('/')

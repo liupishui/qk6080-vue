@@ -30,9 +30,9 @@ module.exports = {
         'generator-star-spacing': 'off',
         // allow debugger during development
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-        'indent': 'off',
+        'indent': 0,
         'vue/script-indent': [
-            'error',
+            0,
             4,
             {
                 'baseIndent': 1
@@ -131,17 +131,17 @@ module.exports = {
         "strict": [2, "function"], //使用严格模式
         "no-catch-shadow": 2, //不允许try catch语句接受的err变量与外部变量重名"no-delete-var": 2, //不允许使用delete操作符
         "no-label-var": 2, //不允许标签和变量同名
-        "no-shadow": 2, //外部作用域中的变量不能与它所包含的作用域中的变量或参数同名
+        "no-shadow": 0, //外部作用域中的变量不能与它所包含的作用域中的变量或参数同名
         "no-shadow-restricted-names": 2, //js关键字和保留字不能作为函数名或者变量名
         "no-undef": 2, //不允许未声明的变量
         "no-undef-init": 2, //不允许初始化变量时给变量赋值undefined
         "no-undefined": 2, //不允许把undefined当做标识符使用
-        "no-unused-vars": [2, {
+        "no-unused-vars": [0, {
             "vars": "all",
             "args": "after-used"
         }], //不允许有声明后未使用的变量或者参数
         "no-use-before-define": [2, "nofunc"], //不允许在未定义之前就使用变量"indent": 2, //强制一致的缩进风格
-        "brace-style": [2, "1tbs", {
+        "brace-style": [0, "1tbs", {
             "allowSingleLine": false
         }], //大括号风格
         "camelcase": [2, {
@@ -197,7 +197,7 @@ module.exports = {
             "int32Hint": true
         }], //操作符周围的空格
         "keyword-spacing": 2, //关键字前后的空格
-        "space-unary-ops": [2, {
+        "space-unary-ops": [0, {
             "words": true,
             "nonwords": false
         }], //一元运算符前后不要加空格
