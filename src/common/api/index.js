@@ -16,6 +16,9 @@ let interceptors = {
     },
     errHandler: function(errMsg) { // 错误处理
 
+    },
+    tokenHandler: function(token){ // token处理
+        return token
     }
 }
 let vue = new Vue()
@@ -103,14 +106,15 @@ async function axiosPost() {
             //   let token = await getToken().then((rst) => {
             //     return rst
             //   })
-            if (getToken()) {
-                baseConfig.headers.Authorization = getToken()
+            let token = interceptors.tokenHandler('');
+            if (token !== '') {
+                baseConfig.headers.Authorization = token
             } else {
                 vue.$dialog.toast({
                     mes: errorCode['602'],
                     timeout: 1000
                 })
-                interceptors.errHandler({ location: 'ajaxEnd', ERR: errorCode, code: '602', MSG: '获取token失败/没有权限' })
+                interceptors.errHandler({ location: 'ajaxStart', ERR: errorCode, code: '602', MSG: '获取token失败/没有权限' })
             }
         }
     }
@@ -168,14 +172,19 @@ let api = function(url = '', interceptorsDefault = {}) {
         this.config = PRO_CONF
     }
     // interceptorsDefault={
-    //     interceptorsReq: function(config) { // 请求拦截
-    //         return config
+    //     interceptorsReq: function(request) { // 请求拦截
+    //         return request
     //     },
     //     interceptorsRes: function(response) { // 响应拦截
     //         return response
     //     },
     //     errHandler: function(errMsg) { // 错误处理
+
+    //     },
+    //     tokenHandler: function(token){ // token处理
+    //         return token
     //     }
+    // }
     if (url !== '') {
         $axios.defaults.baseURL = url // 配置axios请求地址
     } else if (this.config.j_url) {

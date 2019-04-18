@@ -43,11 +43,6 @@ Vue.use(VeeValidate, {
 let $api = new Api('', {
     interceptorsReq: function(request) { // 请求拦截
         store.commit('Loading/loadingStart')
-            // if (store.state.Login.token !== '') {
-            //     request.headers.Authorization = `token ${store.state.Login.token}`
-            // } else {
-            //     // router.push({ path: '/vue/manage' })
-            // }
         return request
     },
     interceptorsRes: function(response) { // 响应拦截
@@ -56,6 +51,17 @@ let $api = new Api('', {
     },
     errHandler: function(errMsg) { // 错误处理
         // console.log('ggg', errMsg)
+    },
+    tokenHandler: function(token){ // token默认为'' token存储位置 store.state（存在于内存中，F5刷新微信右上角刷新即消失,但可以根据同一账号角色权限管理状态）,sessionStorage（临时存储页面刷新不消失，浏览器打开新选项卡里的页面不存在token）,localStorage（永久存储,页面刷新不消失）
+            // if (store.state.Login.token !== '') {
+            //     token = `token ${store.state.Login.token}`
+            // } else {
+            //     // router.push({ path: '/vue/manage' })
+            // }
+        if (sessionStorage.getItem('client_access_token') !== null && sessionStorage.getItem('client_access_token') !== '') {
+            token = sessionStorage.getItem('client_access_token')
+        }
+        return token
     }
 })
 
