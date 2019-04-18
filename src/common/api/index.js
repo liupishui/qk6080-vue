@@ -2,7 +2,11 @@ import _ from 'lodash'
 import axios from 'axios'
 import Vue from 'vue'
 import errorCode from './errorCode'
-import {DEV_CONF, PRO_CONF, APILIST} from './config'
+import {
+  DEV_CONF,
+  PRO_CONF,
+  APILIST
+} from './config'
 let vue = new Vue()
 let $axios = axios.create({
   baseURL: '',
@@ -15,7 +19,10 @@ $axios.interceptors.request.use(config => {
   return config
 }, error => {
   // 处理请求错误
-  vue.$dialog.toast({ mes: errorCode['600'], timeout: 1000 })
+  vue.$dialog.toast({
+    mes: errorCode['600'],
+    timeout: 1000
+  })
   return Promise.reject(error)
 })
 // 添加一个响应拦截
@@ -26,30 +33,36 @@ $axios.interceptors.response.use(response => {
   // 处理响应错误
   for (let code in errorCode) {
     if (~error.message.indexOf(code)) {
-      vue.$dialog.toast({ mes: errorCode[code], timeout: 1000 })
+      vue.$dialog.toast({
+        mes: errorCode[code],
+        timeout: 1000
+      })
     }
   }
   if (error.message === 'Network Error') { // 域名解析不到会报次错误
-    vue.$dialog.toast({ mes: '连接不到服务器', timeout: 1000 })
+    vue.$dialog.toast({
+      mes: '连接不到服务器',
+      timeout: 1000
+    })
   }
   return Promise.reject(error)
 })
 
 async function getToken () {
-//  每次请求前或许token
-//   try {
-//     let tokenRst = await $axios.post('/oauth/token', {
-//       grant_type: 'client_credentials', // 指定授权模式https://www.cnblogs.com/giserliu/p/4372455.html
-//       client_id: 2,
-//       client_secret: '****', // 客户端密码
-//       scope: '*'
-//     }).then((res) => { return res.data.access_token })
-//     return tokenRst
-//   } catch (err) {
-//     vue.$dialog.toast({ mes: '获取token失败，没有权限', timeout: 1000 })
-//   }
-// 本地获取token,一般登录会写入sessionStorage或者localStorage
-  if (typeof (sessionStorage.getItem('client_access_token')) !== 'undefined' && sessionStorage.getItem('client_access_token') != null && sessionStorage.getItem('client_access_token') !== '') {
+  //  每次请求前或许token
+  //   try {
+  //     let tokenRst = await $axios.post('/oauth/token', {
+  //       grant_type: 'client_credentials', // 指定授权模式https://www.cnblogs.com/giserliu/p/4372455.html
+  //       client_id: 2,
+  //       client_secret: '****', // 客户端密码
+  //       scope: '*'
+  //     }).then((res) => { return res.data.access_token })
+  //     return tokenRst
+  //   } catch (err) {
+  //     vue.$dialog.toast({ mes: '获取token失败，没有权限', timeout: 1000 })
+  //   }
+  // 本地获取token,一般登录会写入sessionStorage或者localStorage
+  if (sessionStorage.getItem('client_access_token') != null && sessionStorage.getItem('client_access_token') !== '') {
     return sessionStorage.getItem('client_access_token')
   } else {
     return false
@@ -58,8 +71,7 @@ async function getToken () {
 
 function deepObjectMerge (FirstOBJ, SecondOBJ) { // 深度合并对象
   for (var key in SecondOBJ) {
-    FirstOBJ[key] = FirstOBJ[key] && FirstOBJ[key].toString() === '[object Object]'
-      ? deepObjectMerge(FirstOBJ[key], SecondOBJ[key]) : FirstOBJ[key] = SecondOBJ[key]
+    FirstOBJ[key] = FirstOBJ[key] && FirstOBJ[key].toString() === '[object Object]' ? deepObjectMerge(FirstOBJ[key], SecondOBJ[key]) : FirstOBJ[key] = SecondOBJ[key]
   }
   return FirstOBJ
 }
@@ -71,15 +83,22 @@ async function axiosPost () {
       'X-Requested-With': 'XMLHttpRequest'
     }
   }
-  if (_.filter(APILIST, { name: arguments[0] }).length) {
-    if (_.filter(APILIST, { name: arguments[0] })[0].authorization) { //
-    //   let token = await getToken().then((rst) => {
-    //     return rst
-    //   })
+  if (_.filter(APILIST, {
+    name: arguments[0]
+  }).length) {
+    if (_.filter(APILIST, {
+      name: arguments[0]
+    })[0].authorization) { //
+      //   let token = await getToken().then((rst) => {
+      //     return rst
+      //   })
       if (getToken()) {
         baseConfig.headers.Authorization = getToken()
       } else {
-        vue.$dialog.toast({ mes: '获取token失败/没有权限', timeout: 1000 })
+        vue.$dialog.toast({
+          mes: '获取token失败/没有权限',
+          timeout: 1000
+        })
       }
     }
   }
@@ -108,7 +127,9 @@ async function axiosGet () {
   }
 
   if (arguments.length === 2) {
-    return $axios.get(arguments[0], deepObjectMerge(baseConfig, {params: arguments[1]}))
+    return $axios.get(arguments[0], deepObjectMerge(baseConfig, {
+      params: arguments[1]
+    }))
   }
 }
 
@@ -179,7 +200,9 @@ let api = function (url) {
   )
   contextExtend.keys().forEach(ele => {
     let _self = this
-    this.ext[path.basename(ele, '.js')] = function () { return contextExtend(ele).default.apply(_self, arguments) }
+    this.ext[path.basename(ele, '.js')] = function () {
+      return contextExtend(ele).default.apply(_self, arguments)
+    }
   })
 }
 
