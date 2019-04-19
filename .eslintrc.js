@@ -188,7 +188,7 @@ module.exports = {
             "after": true
         }], //分后前后空格
         "sort-vars": 0, //变量声明时排序
-        "space-before-blocks": [2, "always"], //块前的空格
+        "space-before-blocks": [0, "always"], //块前的空格
         "space-before-function-paren": [0, {
             "anonymous": "always",
             "named": "never"
