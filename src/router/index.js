@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import _ from 'lodash'
+const _import = require('@/router/_import_' + process.env.NODE_ENV) // 获取组件的方法
+console.log(_import)
 // import Icons from '@/components/Icons'
 const path = require('path')
     // const requireComponent = require.context(
@@ -23,7 +25,10 @@ requireComponentKeys.forEach((v, k) => {
     }
     if (path.extname(v) === '.vue') {
         let componentName = v.substr(1).replace(/\/\S{1}/g, function(v, k) { return v.charAt(1).toUpperCase() }).split('.')[0]
-        let componentConfig = requireComponent(v)
+        // let componentConfig = requireComponent(v)
+        // console.log(require('@/' + path.join('./pages', v)))
+        let vs = v.substr(2);
+        let componentConfig = _import(vs.substr(0, vs.length - 4))
         componentsAll[componentName] = componentConfig.default || componentConfig
     }
 })
