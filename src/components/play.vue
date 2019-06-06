@@ -5,11 +5,11 @@
                 <CkplayerCkplayer :src="movieAddress"></CkplayerCkplayer>
             </div>
         </div>
-        <div :style="{color:'#f00',padding:'10px'}">
+        <div :style="{color:'#d4d4d4',padding:'10px'}">
         <h2 :style="{'font-size':'20px','padding-top':'4px','line-height':'1.8'}">
             KakaM3u8播放
         </h2>
-        <div>
+        <div class="void_list">
             <span :class="{playCurr:movieCurrId == item.id}" :style="{border:'1px solid #ccc',width:'60px','text-align':'center','display':'inline-block','line-height':'34px','margin-right':'-1px','margin-bottom':'-1px'}" v-for="(item,key) in kakam3u8" :key="key" :data-id="item.id" v-on:click="playvideo">
                 {{key+1}}
             </span>
@@ -17,7 +17,7 @@
         <h2 :style="{'font-size':'20px','padding-top':'4px','line-height':'1.8'}">
             kuyun播放
         </h2>
-        <div>
+        <div class="void_list">
             <span :class="{playCurr:movieCurrId == item.id}" :style="{border:'1px solid #ccc',width:'60px','text-align':'center','display':'inline-block','line-height':'34px','margin-right':'-1px','margin-bottom':'-1px'}" v-for="(item,key) in kuyun" :key="key" :data-id="item.id" v-on:click="playvideo">
                 {{key+1}}
             </span>
@@ -53,7 +53,7 @@
                 this.movieAddress = _.find([...this.kuyun,...this.kakam3u8],{id:detailid}).address;
             },
             loadList(){
-                this.$axios.get('/detail.php?id='+this.playid).then((res)=>{
+                this.$api.get('/detail.php?id='+this.playid).then((res)=>{
                     this.kuyun = res.data.kuyun;
                     this.kakam3u8 = res.data.kakam3u8;
                 });
@@ -78,7 +78,12 @@
         width: 100%;
         height: 100%;
     }
+    .void_list span{
+        display: inline-block;
+        width:10%;
+        box-sizing:border-box;
+    }
     .playCurr{
-        background: #fff8dc;
+        background: #5a5a5a;
     }
 </style>

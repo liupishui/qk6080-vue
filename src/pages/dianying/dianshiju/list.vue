@@ -1,14 +1,15 @@
 <template>
     <div>
-        <List :query="{typeid:11}"/>
+        <List :query="query"/>
     </div>
 </template>
 <script>
     import {mapState} from 'vuex'
     export default {
         meta:{
-            'title':'综艺'
+            'title':'电视剧'
         },
+        props:['query'],
         data() {
                 return {
                 }
@@ -18,3 +19,4 @@
 <style scoped>
 
 </style>
+

@@ -9,6 +9,10 @@ export default {
         groupname: 'dianying',
         info: []
       },
+      dianshiju: {
+        groupname: 'dianshiju',
+        info: []
+      },
       dianyinglist: {
         groupname: 'dianyinglist',
         info: []

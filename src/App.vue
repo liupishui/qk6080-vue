@@ -2,8 +2,8 @@
   <div style="height:100%">
     <yd-layout>
       <yd-navbar slot="navbar" :title="NavBar">
-        <router-link to="#" slot="left" :class="'btn_back'">
-          <yd-navbar-back-icon></yd-navbar-back-icon>
+        <router-link to="/" exact slot="left" :type="a" :class="'btn_back'">
+          <yd-icon name="home-outline"></yd-icon>
         </router-link>
       </yd-navbar>
       <router-view></router-view>
@@ -14,13 +14,13 @@
           exact
           :active="YdTabbarActive=='电影'"
         >
-          <yd-icon name="home" slot="icon"></yd-icon>
+          <yd-icon name="dianying" custom slot="icon"></yd-icon>
         </yd-tabbar-item>
         <yd-tabbar-item title="电视剧" link="/vue/dianying/dianshiju" :active="YdTabbarActive=='电视剧'">
-          <yd-icon name="shopcart-outline" slot="icon"></yd-icon>
+          <yd-icon name="dianshiju" custom slot="icon"></yd-icon>
         </yd-tabbar-item>
         <yd-tabbar-item title="综艺" link="/vue/dianying/zongyi" :active="YdTabbarActive=='综艺'">
-          <yd-icon name="ucenter-outline" slot="icon"></yd-icon>
+          <yd-icon name="zongyi" custom slot="icon"></yd-icon>
         </yd-tabbar-item>
       </yd-tabbar>
     </yd-layout>

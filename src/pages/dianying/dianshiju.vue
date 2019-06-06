@@ -1,27 +1,14 @@
 <template>
     <div>
-        <div :style="{'height':'calc(100vh - 2.12rem)','overflow':'auto'}">
-            <yd-infinitescroll :callback="loadList" ref="infinitescrollDemo">
-                <yd-list theme="1" slot="list">
-                    <yd-list-item v-for="(item, key) in list" :key="key" v-on:click='showplayLayer' :data-href="item.id">
-                        <img slot="img" :src="item.poster" :data-org="item.posters" :onerror='imgError'>
-                        <span slot="title">{{item.name}}</span>
-                        <yd-list-other slot="other">
-                            <div class="list-price">
-                                <span>{{item.yanyuan==''?'&nbsp;':item.yanyuan}}</span>
-                            </div>
-                            <div class="note">{{item.note}}</div>
-                        </yd-list-other>
-                    </yd-list-item>
-                </yd-list>
-
-                <!-- 数据全部加载完毕显示 -->
-                <span slot="doneTip">啦啦啦，啦啦啦，没有数据啦~~</span>
-
-                <!-- 加载中提示，不指定，将显示默认加载中图标 -->
-                <img slot="loadingTip" src="/static/loading.svg"/>
-
-            </yd-infinitescroll>
+        <div class="wp_yingshi_list">
+            <div class="screenbox">
+                <router-link :to="{path:'/vue/dianying/dianshiju/list',query:{typeid:10}}" :class="{active:this.$route.query.typeid==10}">国产剧</router-link>
+                <router-link :to="{path:'/vue/dianying/dianshiju/list',query:{typeid:14}}" :class="{active:this.$route.query.typeid==14}">港台剧</router-link>
+                <router-link :to="{path:'/vue/dianying/dianshiju/list',query:{typeid:15}}" :class="{active:this.$route.query.typeid==15}">欧美剧</router-link>
+                <router-link :to="{path:'/vue/dianying/dianshiju/list',query:{typeid:16}}" :class="{active:this.$route.query.typeid==16}">泰剧</router-link>
+                <router-link :to="{path:'/vue/dianying/dianshiju/list',query:{typeid:17}}" :class="{active:this.$route.query.typeid==17}">韩剧</router-link>
+                <router-link :to="{path:'/vue/dianying/dianshiju/list',query:{typeid:18}}" :class="{active:this.$route.query.typeid==18}">日剧</router-link>        </div>
+            <childpageslider :class="'movieChildslider'" :groupname="'dianshiju'" :dataSlider="dataSlider" nested></childpageslider>
         </div>
     </div>
 </template>
@@ -31,90 +18,66 @@
         meta:{
             'title':'电视剧'
         },
-        props:['query'],
         data() {
                 return {
-                    page: 1,
-                    pageSize: 18,
-                    imgError:"this.onerror='';this.src=this.getAttribute('data-org')",
-                    typeid:this.param,
-                    list: [
+                    dataSlider:[
+                        {
+                            path:this.rootPath+'/dianying/dianshiju/list',
+                            query:{typeid:10}
+                        },{
+                            path:this.rootPath+'/dianying/dianshiju/list',
+                            query:{typeid:14}
+                        },{
+                            path:this.rootPath+'/dianying/dianshiju/list',
+                            query:{typeid:15}
+                        },{
+                            path:this.rootPath+'/dianying/dianshiju/list',
+                            query:{typeid:16}
+                        },{
+                            path:this.rootPath+'/dianying/dianshiju/list',
+                            query:{typeid:17}
+                        },{
+                            path:this.rootPath+'/dianying/dianshiju/list',
+                            query:{typeid:18}
+                        }
                     ]
                 }
         },
         computed:{
-            ...mapState({
-                currentMovieId:(store) => {
-                    return store.Movie.currentMovieId;
-                },
-                showplay:(store)=>{
-                    return store.Movie.showplay;
-                }
-            })
         },
         created(){
-            if(this.query.typeid){
-                this.typeid = this.query.typeid
-            }else{
-                this.typeid = this.$route.query.typeid
-            }
         },
         mounted(){
-            let that = this;
-            this.loadList();
-            //this.typeid=this.$router.param.typeid;
-            $("#scrollView").delegate('.yd-list-item','click',function(e){
-                e.preventDefault();
-                that.$store.state.Movie.showplay=true;
-                that.$store.state.Movie.currentMovieId=$(this).attr('data-href');
-            });
-            $("body").click(function(e){
-                if($(e.target).hasClass('playboxWp')||($(e.target)[0].tagName.toLowerCase()!='span'&&$('.playboxWp .playbox').next().has($(e.target)).length)){
-                   that.$store.state.Movie.showplay = false;
-                }
-            });
+            this.$router.push(this.dataSlider[0])
         },
         methods: {
-            showplayLayer:function(event){
-            },
-            loadList() {
-                let _self = this
-                console.log()
-                this.$api.get('/list.php',{"page":this.page,'id'  :this.typeid})
-                        .then((res)=>{
-                            const _list = res.data;
-                            let _listCurr = [];
-                            _list.forEach((ele,key)=>{
-                                let imgsrc = ele.poster;
-                                ele.poster = _self.$api.config.img_url+ele.poster.substr(ele.poster.lastIndexOf('/'));
-                                ele.posters = imgsrc;
-                            })
-                            this.list = [...this.list, ..._list];
-
-                            //if (_list.length < this.pageSize || this.page == 3) {
-                            if (_list.length < this.pageSize) {
-                                /* 所有数据加载完毕 */
-                                this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.loadedDone');
-                                return;
-                            }
-
-                            /* 单次请求数据完毕 */
-                            this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.finishLoad');
-
-                            this.page++;
-                        },(err)=>{
-                            console.log(err)
-                        })
-            }
         },
         watch:{
             '$route':function(to,from){
-
+                if(to.fullPath!=from.fullPath){
+                }
             }
         }
     }
 </script>
-<style scoped>
+<style lang="less" scoped>
+    /deep/ .movieChildslider{
+        height: calc(100vh - 1rem - 1.1rem);
+    }
+    /deep/ .active{
+        color:#09bb07;
+    }
+    .wp_yingshi_list{
+        height: calc(100vh - 1rem - 1.2rem);
+    }
+    .screenbox{
+        padding:8px .2rem 0;
+        a{
+            padding:0 .5em;
+            font-size: 14px;
+            line-height: 2;
+        }
+    }
     .list-price{
         white-space: nowrap;
         width: 80%;

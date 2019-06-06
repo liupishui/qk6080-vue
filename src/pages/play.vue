@@ -26,6 +26,7 @@
             }
         },
         mounted(){
+            console.log(2)
             if(this.$route.params.num){
                 this.playid = this.$route.params.num;
             }
