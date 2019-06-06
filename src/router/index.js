@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 import _ from 'lodash'
 // import Icons from '@/components/Icons'
 const path = require('path')
@@ -111,7 +111,7 @@ _.each(pathsAll, function(pathsCurr, index) {
         })
     })
     // console.log('25', '||', routers, maxDeepPath)
-Vue.use(Router)
+Vue.use(VueRouter)
 
 // console.log({
 //   mode: 'history',
@@ -161,5 +161,5 @@ let RouterExport = {
     //     console.log(element.name)
     //   }
     // })
-RouterExport = new Router(RouterExport)
+RouterExport = new VueRouter(RouterExport)
 export default RouterExport

@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Vuex from 'vuex'
-import YDUI from 'vue-ydui'
+import ydui from 'vue-ydui'
 import 'vue-ydui/dist/ydui.base.css'
 import 'vue-ydui/dist/ydui.rem.css'
 import 'vue-ydui/dist/ydui.flexible.js'
@@ -67,7 +67,7 @@ let $api = new Api('', {
 
 Vue.prototype.$api = $api
 Vue.use(Vuex)
-Vue.use(YDUI)
+Vue.use(ydui)
 Vue.config.productionTip = true
 
 // https://github.com/axios/axios#creating-an-instance //建立一个实例

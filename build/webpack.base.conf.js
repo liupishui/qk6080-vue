@@ -88,5 +88,12 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
     child_process: 'empty'
+  },
+// externals中的key是后面需要require的名字，value是第三方库暴露出来的方法名
+  externals:{
+    'vue':'Vue',
+    'vue-router': 'VueRouter',
+    'axios': 'axios',
+    'vue-ydui': 'ydui'
   }
 }
