@@ -16,7 +16,7 @@ export default {
     data () {
         return {
             messages: 'HelloWorld',
-            videoid: new Date()-1+Math.random().toString().substr(2),
+            videoid: new Date()-1+Math.random().toString().substr(4),
         }
     },
     mounted: function(){
@@ -35,7 +35,7 @@ export default {
                     p: 1
                 };
                 if(this.src){
-                    flashvars.a=this.src
+                    flashvars.a=this.src;
                 }else{
                     flashvars.a='https://kakazy-yun.com/20190218/18344_48525b5a/index.m3u8'
                 }
@@ -51,9 +51,11 @@ export default {
                     var video = [this.src ? this.src : 'https://kakazy-yun.com/20190218/18344_48525b5a/index.m3u8'];
                     //var support = ['iPad', 'iPhone', 'ios', 'android+false', 'msie10+false'];
                     var support = ['all'];
+                    video = video.substr(0,video.indexOf('.m3u8')+5);
                     CKobject.embedHTML5(this.videoid, 'ckplayer_' + this.videoid,'100%','100%',video,flashvars,support);
 
                 }else{
+                    flashvars.a = flashvars.a.substr(0,flashvars.a.indexOf('.m3u8')+5);
                     CKobject.embedSWF('/static/ckplayer/ckplayer.swf', this.videoid, 'ckplayer_' + this.videoid, '100%', '100%', flashvars, params);
                 }
                 //var player = new ckplayer(videoObject);
