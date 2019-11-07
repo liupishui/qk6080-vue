@@ -5,6 +5,10 @@ qk6080电影网站vue版本
 ## 异步加载不能用 require.context
     三个文件 src/main.js,src/router/index.js和/sr/store/index.js内均有这个方法，需要注释掉
 ## 异步加载参考项目
+npm test
+```
+
+For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
     ```
     
